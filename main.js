@@ -32,11 +32,12 @@ const pAequorFactory = (specimenNum) => {
 			for (let i = 0; i < this.dna.length; i++) {
 				if (this.dna[i] === pAequor.dna[i]) mutual++;
 			}
-			console.log(
+			return [this.specimenNum, pAequor.specimenNum, mutual * 6.666];
+			/* console.log(
 				`Comparing species #${this.specimenNum} and #${
 					pAequor.specimenNum
 				}. Their DNA match in ${mutual * 6.666}%.`
-			);
+			); */
 		},
 		willLikelySurvive() {
 			//CHECK IS THIS EXAMPLE WOULD SURVIVE
@@ -78,7 +79,14 @@ while (examples30.length < 30) {
 		? (examples30.push(newOne), speciesCounter++)
 		: null; //CREATE A GROUP OF 30 EXAMPLES WITH HIGH CHANCES TO SURVIVE
 }
-/* console.log(examples30); */
-
-console.log(examples30[1].dna);
-console.log(examples30[1].complementStrand());
+// FINDING THE MOST RELATED EXAMPLES OF PAEQUOR
+let pairOfTheMostRelated = [0, 0, 0];
+for (let i = 0; i < 30; i++) {
+	for (let x = i + 1; x < 30; x++) {
+		if (examples30[i].compareDNA(examples30[x])[2] > pairOfTheMostRelated[2])
+			pairOfTheMostRelated = examples30[i].compareDNA(examples30[x]);
+	}
+}
+console.log(
+	`The most related pair of pAequor is #${pairOfTheMostRelated[0]} and #${pairOfTheMostRelated[1]}. Their DNA match in ${pairOfTheMostRelated[2]}%.`
+);
